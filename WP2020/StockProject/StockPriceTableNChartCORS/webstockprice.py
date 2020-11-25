@@ -18,6 +18,7 @@ from flask import session
 from flask import jsonify
 from flask import make_response
 from flask import request
+from flask_cors import CORS, cross_origin
 
 import json
 import urllib.parse
@@ -37,7 +38,9 @@ except:
 plt.rcParams["figure.figsize"] = (6.4, 4.8)
 
 app = Flask(__name__)
+# CORS(app)
 app.secret_key = 'StvaKy0d9ebU8LfOWX6rBazllGizVNxf'
+app.config["DEBUG"] = True
 
 #GETPRICE_URL = "http://localhost:5008/getprice/{}"
 #GETPRICE_URL = "http://192.168.100.193/stockapi/getprice/{}"

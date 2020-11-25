@@ -17,6 +17,7 @@ from flask import url_for
 from flask import session
 from flask import jsonify
 from flask import make_response
+from flask_cors import CORS, cross_origin
 
 import json
 import urllib.parse
@@ -37,6 +38,7 @@ plt.rcParams["figure.figsize"] = (6.4, 4.8)
 
 app = Flask(__name__)
 app.secret_key = 'StvaKy0d9ebU8LfOWX6rBazllGizVNxf'
+CORS(app)
 
 #GETPRICE_URL = "http://localhost:5008/getprice/{}"
 #GETPRICE_URL = "http://192.168.100.193/stockapi/getprice/{}"
@@ -44,6 +46,7 @@ GETPRICE_URL = "http://220.67.121.119/stockapi/getprice/{}"
 
 @app.route("/getprice/")
 @app.route("/getprice/<days>")
+@cross_origin()
 def getprice(days=""):
     session['ndays'] = 30 if days == "" else int(days)
     url = GETPRICE_URL.format(days)
@@ -66,6 +69,7 @@ def getprice(days=""):
     return response
 
 @app.route("/getplot/<query>")
+@cross_origin()
 def getplot(query):
         
     svg = ''

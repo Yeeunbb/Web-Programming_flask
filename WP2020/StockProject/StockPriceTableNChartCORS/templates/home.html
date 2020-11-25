@@ -7,8 +7,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../static/css/index.css" rel="stylesheet" />
+    <link href="../static/css/style.css" rel="stylesheet"/>
+
   </head>
+
   <body>
     <div class="jumbotron jumbotron-fluid" id="HomeSection">
       <h1 class="jumbotronTextOnImages text-center" id="JumbotronHeading">관심 주식 가격 동향</h1>
@@ -60,13 +62,17 @@
           <input type="button" class="btn btn-info" value="Delete Table" onclick="deleteTable()" />
         </div>
       </div>
-      <div class="row">
-        <div id="priceTable"></div>
-        <table style="width: 100%">
+    </div>
+    <div id="sp"></div>
+    <div class="row">
+      <div class="container">
+        <!-- <div id="priceTable"></div> -->
+        <table class="table table-striped" style="width: 100%">
           <thead id="thead"></thead>
           <tbody id="tbody"></tbody>
         </table>
       </div>
+    </div>
       <div class="row">
         <div id="svgFig1"></div>
       </div>
@@ -117,8 +123,8 @@
       }
       function showTable() {
         if (selList.length === 0) return;
-        //var url = 'http://220.67.121.119/stockapi/getprice/' + gdays; // CORS 문제
-        //var url = 'http://127.0.0.1:5001/getprice/' + gdays; // CORS 아님
+        // var url = 'http://220.67.121.119/stockapi/getprice/'; // CORS 문제
+        // var url = 'http://127.0.0.1:5001/getprice/' + gdays; // CORS 아님
         var url = 'http://127.0.0.1:5005/getprice/' + gdays; // CORS 사용
 
         console.log(url);
@@ -126,14 +132,15 @@
           console.log(json);
           let head = json.head;
           let rows = json.rows;
-          //$('#priceTable').html('<div>' + JSON.stringify(json) + '</div>');
-          let tabHeadRow = '<td style="text-align:right;">date</td>';
+          // $('#priceTable').html('<div>' + JSON.stringify(json) + '</div>');
+          let tabHeadRow = '<th id="fixedHeader" style="text-align:right;">date</th>';
           let selCols = [];
           for (let j = 0; j < head.length; j++) {
-            //console.log('head[j]=', head[j]);
+            // console.log('head[j]=', head[j]);
             if (selList.includes(head[j])) {
+              console.log('head[j]=', head[j]);
               selCols.push(j);
-              tabHeadRow += '<td style="text-align:right;">' + head[j] + '</td>';
+              tabHeadRow += '<th id="fixedHeader" style="text-align:right;">' + head[j] + '</th>';
             }
           }
           console.log('tabHeadRow=', tabHeadRow);
