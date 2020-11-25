@@ -18,9 +18,14 @@ app.config['SECRET_KEY'] = 'x6vGZrpUtoMGo+T+uFrkxQ9DLh7F8qSM'
 
 DB = DBHelper()
 
-@app.route("/", methods=['GET','POST'])
+@app.route("/home", methods=['GET','POST'])
 def home():
-    #session.clear()
+    session.clear()
+    if request.method == 'POST':
+        session['gubun'] = request.form.get('gubun')
+        session['grade'] = request.form.get('grade')
+        session['stu_dept'] = request.form.get('stu_dept')
+        session['stu_name'] = request.form.get('stu_name')
 
     return render_template("home.html")
 
@@ -51,4 +56,4 @@ def listprice():
     return render_template("list_price_tab.html", price_param=price_param, price_list=price_list)
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)
+    app.run(port=5005, debug=True)
