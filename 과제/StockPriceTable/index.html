@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running JavaScript</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="static/css/my-style.css">
+</head>
+
+<body>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th id='fixedHeader' style="width: 10%">Line No.</th>
+                    <th id='fixedHeader' style="width: 15%">Date</th>
+                    <th id='fixedHeader' style="width: 10%">S-Oil</th>
+                    <th id='fixedHeader' style="width: 10%">NAVER</th>
+                    <th id='fixedHeader' style="width: 10%">현대차</th>
+                    <th id='fixedHeader' style="width: 10%">삼성생명</th>
+                    <th id='fixedHeader' style="width: 10%">카카오</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="csvdata_all.js"></script>
+    <script>
+        var selNames = ['S-Oil', 'NAVER', '현대차', '삼성생명', '카카오']
+        var csv = getCsvData();
+        //console.log(csv);
+        json = csv2json(csv);
+        //console.log(json[0]);
+        sel = filterName(json, "name", selNames)
+        rows = groupByDate(sel);
+        console.log(rows);
+
+        for (var i = 0; i < rows.length; i++) {
+            var da = rows[i]["date"];
+            var cols = rows[i]["cols"];
+            var tabrow = "<tr>" + '<td style="width:10%">' + (i + 1) + "</td>"
+            var tabrow = tabrow +
+                '<td style="width: 10%">' + da + "</td>"
+            for (var j = 0; j < cols.length; j++) {
+                tabrow = tabrow + '<td style="width:5%;">' +
+                    cols[j]['price'] + "</td>";
+            }
+            tabrow += "</tr>";
+            $('#tbody').append(tabrow);
+
+        }
+    </script>
+</body>
+
+</html>
